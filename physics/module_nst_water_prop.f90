@@ -7,10 +7,12 @@
 module module_nst_water_prop
   use machine, only : kind_phys
   use module_nst_parameters, only : t0k
+
+  implicit none
   !
   private
-  public :: rhocoef,density,sw_rad,sw_rad_aw,sw_rad_sum,sw_rad_upper,sw_rad_upper_aw,sw_rad_skin,grv,solar_time_from_julian,compjd, &
-            sw_ps_9b,sw_ps_9b_aw,get_dtzm_point,get_dtzm_2d
+  public :: rhocoef,density,sw_rad,sw_rad_aw,sw_rad_sum,sw_rad_upper,sw_rad_upper_aw,sw_rad_skin,grv,&
+       solar_time_from_julian,compjd, sw_ps_9b,sw_ps_9b_aw,get_dtzm_point,get_dtzm_2d
 
   integer, parameter :: kp = kind_phys
   real (kind=kind_phys), parameter :: zero = 0.0_kp, one = 1.0_kp, half=0.5_kp
@@ -47,7 +49,6 @@ contains
 !! and saline contraction coefficient (beta).
   subroutine rhocoef(t, s, rhoref, alpha, beta)
     ! ------------------------------------------------------
-
     !  compute thermal expansion coefficient (alpha)
     !  and saline contraction coefficient (beta) using
     !  the international equation of state of sea water
@@ -55,7 +56,6 @@ contains
     !  dynamical oceanography, pp310.
     !  note: compression effects are not included
 
-    implicit none
     real(kind=kind_phys), intent(in)  :: t, s, rhoref
     real(kind=kind_phys), intent(out) :: alpha, beta
     real(kind=kind_phys) :: tc
@@ -91,7 +91,6 @@ contains
 !! This subroutine computes sea water density.
   subroutine density(t, s, rho)
     ! ----------------------------------------
-    implicit none
 
     ! input
     real(kind=kind_phys), intent(in)  :: t     !unit, k
@@ -139,7 +138,6 @@ contains
     ! output:
     ! fxp: fraction of the solar radiation absorbed by the ocean at depth z (w/m^2)
     !
-    implicit none
     real(kind=kind_phys), intent(in)  :: z
     real(kind=kind_phys), intent(out) :: fxp
     real(kind=kind_phys), dimension(9), parameter :: &
@@ -173,7 +171,6 @@ contains
     ! output:
     ! fxp: fraction of the solar radiation absorbed by the ocean at depth z (w/m^2)
     !
-    implicit none
     real(kind=kind_phys), intent(in)  :: z
     real(kind=kind_phys), intent(out) :: aw
     real(kind=kind_phys), dimension(9), parameter :: &
@@ -206,9 +203,8 @@ contains
     ! output:
     ! fxp: fraction of the solar radiation absorbed by the ocean at depth z (w/m^2)
     !
-    implicit none
-    real(kind=kind_phys),intent(in):: z
-    real(kind=kind_phys),intent(out):: fxp
+    real(kind=kind_phys),intent(in)  :: z
+    real(kind=kind_phys),intent(out) :: fxp
     real(kind=kind_phys), dimension(9), parameter :: f=(/0.237,0.36,0.179,0.087,0.08,0.0246,0.025,0.007,0.0004/) &
          ,gamma=(/34.8,2.27,3.15e-2,5.48e-3,8.32e-4,1.26e-4,3.13e-4,7.82e-5,1.44e-5/)
     real(kind=kind_phys),dimension(9) :: zgamma
@@ -244,9 +240,8 @@ contains
     !
     ! fxp: fraction of the solar radiation absorbed by the ocean at depth z (w/m^2)
     !
-    implicit none
-    real(kind=kind_phys),intent(in):: z
-    real(kind=kind_phys),intent(out):: aw
+    real(kind=kind_phys),intent(in)  :: z
+    real(kind=kind_phys),intent(out) :: aw
     real(kind=kind_phys) :: fxp
     real(kind=kind_phys), dimension(9), parameter :: f=(/0.237,0.36,0.179,0.087,0.08,0.0246,0.025,0.007,0.0004/) &
          ,gamma=(/34.8,2.27,3.15e-2,5.48e-3,8.32e-4,1.26e-4,3.13e-4,7.82e-5,1.44e-5/)
@@ -284,9 +279,8 @@ contains
     ! sum: for convection depth calculation
     !
     !
-    implicit none
-    real(kind=kind_phys),intent(in):: z
-    real(kind=kind_phys),intent(out):: sum
+    real(kind=kind_phys),intent(in)  :: z
+    real(kind=kind_phys),intent(out) :: sum
     real(kind=kind_phys), dimension(9), parameter :: gamma=(/34.8,2.27,3.15e-2,5.48e-3,8.32e-4,1.26e-4,3.13e-4,7.82e-5,1.44e-5/)
     real(kind=kind_phys),dimension(9) :: zgamma
     real(kind=kind_phys),dimension(9) :: f_sum
@@ -319,9 +313,8 @@ contains
     ! output:
     ! df_sol_z: solar radiation absorbed by the ocean at depth z (w/m^2)
     !
-    implicit none
-    real(kind=kind_phys),intent(in):: z,f_sol_0
-    real(kind=kind_phys),intent(out):: df_sol_z
+    real(kind=kind_phys),intent(in)  :: z,f_sol_0
+    real(kind=kind_phys),intent(out) :: df_sol_z
     !
     if(z>zero) then
        df_sol_z=f_sol_0*(0.137+11.0*z-6.6e-6/z*(one-exp(-z/8.e-4)))
@@ -350,9 +343,8 @@ contains
     ! output:
     ! df_sol_z: solar radiation absorbed by the ocean at depth z (w/m^2)
     !
-    implicit none
-    real(kind=kind_phys),intent(in):: z,f_sol_0
-    real(kind=kind_phys),intent(out):: df_sol_z
+    real(kind=kind_phys),intent(in)  :: z,f_sol_0
+    real(kind=kind_phys),intent(out) :: df_sol_z
     !
     if(z>zero) then
        df_sol_z=f_sol_0*(0.065+11.0*z-6.6e-5/z*(one-exp(-z/8.e-4)))
@@ -383,9 +375,8 @@ contains
     ! output:
     ! df_sol_z: solar radiation absorbed by the ocean at depth z (w/m^2)
     !
-    implicit none
-    real(kind=kind_phys),intent(in):: z,f_sol_0
-    real(kind=kind_phys),intent(out):: df_sol_z
+    real(kind=kind_phys),intent(in)  :: z,f_sol_0
+    real(kind=kind_phys),intent(out) :: df_sol_z
     real(kind=kind_phys),dimension(3) :: f_c
     real(kind=kind_phys), dimension(3), parameter :: f=(/0.45,0.27,0.28/) &
          ,gamma=(/12.8,0.357,0.014/)
@@ -414,9 +405,8 @@ contains
     ! output:
     ! df_sol_z: solar radiation absorbed by the ocean at depth z (w/m^2)
     !
-    implicit none
-    real(kind=kind_phys),intent(in):: z,f_sol_0
-    real(kind=kind_phys),intent(out):: df_sol_z
+    real(kind=kind_phys),intent(in)  :: z,f_sol_0
+    real(kind=kind_phys),intent(out) :: df_sol_z
     !
     if(z>zero) then
        df_sol_z=f_sol_0*(one                    &
@@ -442,10 +432,9 @@ contains
     ! output:
     ! aw: d(fxp)/d(z)
     !
-    implicit none
-    real(kind=kind_phys),intent(in):: z
-    real(kind=kind_phys),intent(out):: aw
-    real(kind=kind_phys):: fxp
+    real(kind=kind_phys),intent(in)  :: z
+    real(kind=kind_phys),intent(out) :: aw
+    real(kind=kind_phys) :: fxp
     !
     if(z>zero) then
        fxp=(one                                 &
@@ -473,9 +462,8 @@ contains
     ! output:
     ! fxp: fraction of the solar radiation absorbed by the ocean at depth z (w/m^2)
     !
-    implicit none
-    real(kind=kind_phys),intent(in):: z
-    real(kind=kind_phys),intent(out):: fxp
+    real(kind=kind_phys),intent(in)  :: z
+    real(kind=kind_phys),intent(out) :: fxp
     !
     if(z>zero) then
        fxp=.065+11.*z-6.6e-5/z*(one-exp(-z/8.0e-4))
@@ -509,7 +497,6 @@ subroutine solar_time_from_julian(jday,xlon,soltim)
   !
   ! calculate solar time from the julian date
   !
-  implicit none
   real(kind=kind_phys), intent(in)  :: jday
   real(kind=kind_phys), intent(in)  :: xlon
   real(kind=kind_phys), intent(out) :: soltim
@@ -563,8 +550,6 @@ end subroutine solar_time_from_julian
 !   language: fortran.
 !
 !$$$
-      use machine , only :kind_phys
-      implicit none
 !
       integer jyr,jmnth,jday,jhr,jmn,jd
       integer iw3jdn
@@ -608,10 +593,6 @@ end subroutine solar_time_from_julian
 !  outputs:                                                             !
 !     dtm   - mean of dT(z)  (z1 to z2)                              1  !
 !
-  use machine , only : kind_phys
-
-  implicit none
-
   real (kind=kind_phys), intent(in)  :: xt,xz,dt_cool,zc,z1,z2
   real (kind=kind_phys), intent(out) :: dtm
 ! Local variables
@@ -695,10 +676,6 @@ end subroutine solar_time_from_julian
 !  outputs:                                                             !
 !     dtm   - mean of dT(z)  (z1 to z2)                              1  !
 !
-  use machine , only : kind_phys
-
-  implicit none
-
   integer, intent(in) :: nx,ny, nth
   real (kind=kind_phys), dimension(nx,ny), intent(in)  :: xt,xz,dt_cool,zc
   logical, dimension(nx,ny), intent(in)  :: wet
