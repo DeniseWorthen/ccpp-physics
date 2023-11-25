@@ -10,7 +10,6 @@
 !> This module contains the diurnal thermocline layer model (DTM) of
 !! the GFS NSST scheme.
 module nst_module
-
   !
   ! the module of diurnal thermocline layer model
   !
@@ -20,13 +19,11 @@ module nst_module
        ri_g,omg_m,omg_sh, kw => tc_w,visw,t0k,cp_w,                          &
        z_c_max,z_c_ini,ustar_a_min,delz,exp_const,                           &
        rad2deg,const_rot,tw_max,sst_max
+  use module_nst_parameters , only : zero, one
   use module_nst_water_prop, only: sw_rad_skin,sw_ps_9b,sw_ps_9b_aw
   implicit none
 
   private
-
-  integer, parameter :: kp = kind_phys
-  real (kind=kind_phys), parameter :: zero = 0.0_kp, one = 1.0_kp
 
   public :: dtm_1p, dtm_1p_fca, dtm_1p_tla, dtm_1p_mwa, dtm_1p_mda, dtm_1p_mta, convdepth
   public :: cal_w, cal_ttop, cool_skin, dtl_reset
@@ -40,8 +37,8 @@ contains
        xt,xs,xu,xv,xz,xzts,xtts)
 
     integer, intent(in) :: kdt
-    real(kind=kind_phys), intent(in) :: timestep,rich,tox,toy,i0,q,sss,sep,q_ts, &
-         hl_ts,rho,alpha,beta,alon,sinlat,soltim, grav,le,d_conv
+    real(kind=kind_phys), intent(in) :: timestep,rich,tox,toy,i0,q,sss,sep,q_ts,&
+         hl_ts,rho,alpha,beta,alon,sinlat,soltim,grav,le,d_conv
     real(kind=kind_phys), intent(inout) :: xt,xs,xu,xv,xz,xzts,xtts
     ! local variables
 
@@ -87,24 +84,22 @@ contains
        ! forward the system one time step
        !
        call eulerm(kdt,timestep,rich,tox,toy,i0,q,sss,sep,q_ts,hl_ts,rho,alpha,    &
-            beta,alon,sinlat,soltim,grav,le,d_conv,                                &
-            xt,xs,xu,xv,xz,xzts,xtts)
+            beta,alon,sinlat,soltim,grav,le,d_conv,xt,xs,xu,xv,xz,xzts,xtts)
     endif                         ! if ( xt == 0 ) then
 
   end subroutine dtm_1p
 
   !>\ingroup gfs_nst_main_mod
   !! This subroutine integrates one time step with modified Euler method.
-  subroutine eulerm(kdt,timestep,rich,tox,toy,i0,q,sss,sep,q_ts,hl_ts,rho,alpha, &
-       beta,alon,sinlat,soltim,grav,le,d_conv,                                   &
-       xt,xs,xu,xv,xz,xzts,xtts)
+  subroutine eulerm(kdt,timestep,rich,tox,toy,i0,q,sss,sep,q_ts,hl_ts,rho,alpha,   &
+       beta,alon,sinlat,soltim,grav,le,d_conv,xt,xs,xu,xv,xz,xzts,xtts)
 
     !
     ! subroutine eulerm: integrate one time step with modified euler method
     !
     integer, intent(in) :: kdt
-    real(kind=kind_phys), intent(in) :: timestep,rich,tox,toy,i0,q,sss,sep,q_ts, &
-         hl_ts,rho,alpha,beta,alon,sinlat,soltim, grav,le,d_conv
+    real(kind=kind_phys), intent(in) :: timestep,rich,tox,toy,i0,q,sss,sep,q_ts,   &
+         hl_ts,rho,alpha,beta,alon,sinlat,soltim grav,le,d_conv
     real(kind=kind_phys), intent(inout) :: xt,xs,xu,xv,xz,xzts,xtts
     !  local variables
     real(kind=kind_phys) :: xt0,xs0,xu0,xv0,xz0,xzts0,xtts0
@@ -169,7 +164,7 @@ contains
 
     drho  = -alpha*q_warm/(rho*cp_w) + omg_m*beta*sep
 
-    ! dzw   = xz0*(tox*xu0+toy*xv0) / (rho*(xu0*xu0+xv0*xv0))                 &
+    ! dzw   = xz0*(tox*xu0+toy*xv0) / (rho*(xu0*xu0+xv0*xv0))               &
     !       + xz0*xz0*xz0*drho*grav / (4.0*rich*(xu0*xu0+xv0*xv0))
     dzw   = xz0 * ((tox*xu0+toy*xv0) / (rho*speed)                          &
          +   xz0*xz0*drho*grav / (4.0*rich*speed))
@@ -190,9 +185,9 @@ contains
 
     ! call dtm_1p_zwa(kdt,timestep,i0,q,rho,d_conv,xt1,xs1,xu1,xv1,xz1,tr_mda,tr_fca,tr_tla,tr_mwa)
 
-    xzts1 = xzts0 + timestep*((1.0/(xu0*xu0+xv0*xv0)) *                         &
-         ( (alpha*q_ts/cp_w+omg_m*beta*sss*hl_ts/le)*grav*xz0**3/(4.0*rich*rho) &
-         +( (tox*xu0+toy*xv0)/rho+(3.0*drho-alpha*i0*aw*xz0/(rho*cp_w))         &
+    xzts1 = xzts0 + timestep*((1.0/(xu0*xu0+xv0*xv0)) *                          &
+         ( (alpha*q_ts/cp_w+omg_m*beta*sss*hl_ts/le)*grav*xz0**3/(4.0*rich*rho)  &
+         +( (tox*xu0+toy*xv0)/rho+(3.0*drho-alpha*i0*aw*xz0/(rho*cp_w))          &
          *grav*xz0*xz0/(4.0*rich) )*xzts0 ))
     xtts1 = xtts0 + timestep*(i0*aw*xzts0-q_ts)/(rho*cp_w)
 
@@ -221,9 +216,9 @@ contains
        return
     endif
 
-    xzts2 = xzts0 + timestep*((1.0/(xu1*xu1+xv1*xv1)) *                         &
-         ( (alpha*q_ts/cp_w+omg_m*beta*sss*hl_ts/le)*grav*xz1**3/(4.0*rich*rho) &
-         +( (tox*xu1+toy*xv1)/rho+(3.0*drho-alpha*i0*aw*xz1/(rho*cp_w))*        &
+    xzts2 = xzts0 + timestep*((1.0/(xu1*xu1+xv1*xv1)) *                          &
+         ( (alpha*q_ts/cp_w+omg_m*beta*sss*hl_ts/le)*grav*xz1**3/(4.0*rich*rho)  &
+         +( (tox*xu1+toy*xv1)/rho+(3.0*drho-alpha*i0*aw*xz1/(rho*cp_w))*         &
          grav*xz1*xz1/(4.0*rich) )*xzts1 ))
     xtts2 = xtts0 + timestep*(i0*aw*xzts1-q_ts)/(rho*cp_w)
 
@@ -264,7 +259,7 @@ contains
     real(kind=kind_phys) :: dz,t0,ttop0,ttop,fw,q_warm
     real(kind=kind_phys) :: xz_fca,xz_tla,xz_mwa
     !
-    real(kind=kind_phys) xz_mda
+    real(kind=kind_phys) :: xz_mda
 
     tr_mda = zero; tr_fca = zero; tr_tla = zero; tr_mwa = zero
 
@@ -342,7 +337,7 @@ contains
     real(kind=kind_phys), intent(in)    :: dz,te,xt,xtts
     real(kind=kind_phys), intent(inout) :: xz,xzts
     !  local variables
-    real(kind=kind_phys) tem
+    real(kind=kind_phys) :: tem
     !
     tem = xt*(xt-dz*te)
     if (tem > zero) then
@@ -489,14 +484,14 @@ contains
   end subroutine convdepth
 
   !>\ingroup gfs_nst_main_mod
-  subroutine dtm_onset(kdt,timestep,rich,tox,toy,i0,q,sss,sep,q_ts,hl_ts,rho, &
+  subroutine dtm_onset(kdt,timestep,rich,tox,toy,i0,q,sss,sep,q_ts,hl_ts,rho,    &
        alpha,beta,alon,sinlat,soltim,grav,le,xt,xs,xu,xv,xz,xzts,xtts)
     !
     ! determine xz iteratively (starting wit fw = 0.5) and then update the other 6 variables
     !
 
     integer,intent(in) :: kdt
-    real(kind=kind_phys), intent(in) :: timestep,rich,tox,toy,i0,q,sss,sep,q_ts,&
+    real(kind=kind_phys), intent(in) :: timestep,rich,tox,toy,i0,q,sss,sep,q_ts, &
          hl_ts,rho,alpha,beta,alon,sinlat,soltim,grav,le
     real(kind=kind_phys), intent(out) :: xt,xs,xu,xv,xz,xzts,xtts
     real(kind=kind_phys) :: xt0,xs0,xu0,xv0,xz0
@@ -850,8 +845,7 @@ contains
     real(kind=kind_phys), intent(in) :: ustar_a,f_nsol,f_sol_0,evap,sss,alpha,beta,rho_w,rho_a,ts,q_ts,hl_ts,grav,le
     real(kind=kind_phys), intent(out):: deltat_c,z_c,c_0,c_d
     ! declare local variables
-    real(kind=kind_phys), parameter ::   a1=0.065, a2=11.0, a3=6.6e-5, a4=8.0e-4, tcw=0.6 &
-         , tcwi=1.0/tcw
+    real(kind=kind_phys), parameter :: a1=0.065, a2=11.0, a3=6.6e-5, a4=8.0e-4, tcw=0.6 , tcwi=1.0/tcw
     real(kind=kind_phys) :: a_c,b_c,zc_ts,bc1,bc2
     real(kind=kind_phys) :: xi,hb,ustar1_a,bigc,deltaf,fxp
     real(kind=kind_phys) :: zcsq
