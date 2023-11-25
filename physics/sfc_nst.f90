@@ -61,8 +61,7 @@ contains
     !           )
     !                                                                       !
     !                                                                       !
-    !  subprogram/functions called: w3movdat, iw3jdn, fpvs, density,        !
-    !       rhocoef, cool_skin, warm_layer, jacobi_temp.                    !
+    !  subprogram/functions called: fpvs, density, rhocoef, cool_skin       !
     !                                                                       !
     !  program history log:                                                 !
     !         2007  -- xu li       createad original code                   !
@@ -183,8 +182,8 @@ contains
     !
     logical, dimension(:), intent(in) :: flag_iter, flag_guess, wet
     integer, dimension(:), intent(in) :: use_lake_model
-    logical,                intent(in) :: lprnt
-    logical,                intent(in) :: thsfc_loc
+    logical,               intent(in) :: lprnt
+    logical,               intent(in) :: thsfc_loc
 
     !  ---  input/outputs:
     ! control variables of dtl system (5+2) and sl (2) and coefficients for d(tz)/d(ts) calculation
@@ -226,9 +225,6 @@ contains
     real(kind=kind_phys) :: t12,alon,tsea,sstc,dta,dtz
     real(kind=kind_phys) :: zsea1,zsea2,soltim
     logical :: do_nst
-
-    !  external functions called: iw3jdn
-    integer :: iw3jdn
     !
     !  parameters for sea spray effect
     !
