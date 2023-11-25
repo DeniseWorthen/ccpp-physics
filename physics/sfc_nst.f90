@@ -1,4 +1,4 @@
-!>\file sfc_nst.f
+!>\file sfc_nst.f90
 !!  This file contains the GFS NSST model.
 
 !> This module contains the CCPP-compliant GFS near-surface sea temperature scheme.

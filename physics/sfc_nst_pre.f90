@@ -1,4 +1,4 @@
-!>  \file sfc_nst_pre.f
+!>  \file sfc_nst_pre.f90
 !!  This file contains preparation for the GFS NSST model.
 
 module sfc_nst_pre

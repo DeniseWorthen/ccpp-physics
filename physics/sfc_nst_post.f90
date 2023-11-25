@@ -1,4 +1,4 @@
-!>  \file sfc_nst_post.f
+!>  \file sfc_nst_post.f90
 !!  This file contains code to be executed after the GFS NSST model.
 
 module sfc_nst_post
