@@ -99,7 +99,7 @@ contains
     !
     integer, intent(in) :: kdt
     real(kind=kind_phys), intent(in) :: timestep,rich,tox,toy,i0,q,sss,sep,q_ts,   &
-         hl_ts,rho,alpha,beta,alon,sinlat,soltim grav,le,d_conv
+         hl_ts,rho,alpha,beta,alon,sinlat,soltim,grav,le,d_conv
     real(kind=kind_phys), intent(inout) :: xt,xs,xu,xv,xz,xzts,xtts
     !  local variables
     real(kind=kind_phys) :: xt0,xs0,xu0,xv0,xz0,xzts0,xtts0

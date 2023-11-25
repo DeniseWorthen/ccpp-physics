@@ -11,12 +11,6 @@
 module module_nst_parameters
 
   use machine, only :  kind_phys
-
-  implicit none
-
-  public
-
-  real(kind_phys), parameter :: zero = 0.0_kind_phys, one = 1.0_kind_phys, half = 0.5_kind_phys
   !
   ! air constants and coefficients from the atmospehric model
   use physcons, only:        &
@@ -31,6 +25,12 @@ module module_nst_parameters
        ,rd      => con_rd    &         !< gas constant air (j/kg/k)
        ,rocp    => con_rocp  &         !< r/cp
        ,pi      => con_pi
+
+  implicit none
+
+  public
+
+  real(kind_phys), parameter :: zero = 0.0_kind_phys, one = 1.0_kind_phys, half = 0.5_kind_phys
   !
   ! note: take timestep from here later
   integer :: &

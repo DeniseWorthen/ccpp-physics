@@ -274,8 +274,8 @@ contains
     real(kind=kind_phys), intent(in)  :: z
     real(kind=kind_phys), intent(out) :: sum
 
-    real(kind=kind_phys), dimension(9) :: zgamma
-    real(kind=kind_phys), dimension(9) :: f_sum
+    !real(kind=kind_phys), dimension(9) :: zgamma
+    !real(kind=kind_phys), dimension(9) :: f_sum
     !
     !    zgamma=z/gamma
     !    f_sum=(zgamma/z)*exp(-zgamma)
@@ -469,14 +469,14 @@ contains
   !>\ingroup gfs_nst_main_mod
   function grv(x)
     real(kind=kind_phys) :: x    !< sin(lat)
-    real(kind=kind_phys) :: gamma,c1,c2,c3,c4
-    gamma=9.7803267715
+    real(kind=kind_phys) :: lgamma,c1,c2,c3,c4
+    lgamma=9.7803267715
     c1=0.0052790414
     c2=0.0000232718
     c3=0.0000001262
     c4=0.0000000007
 
-    grv=gamma*(1.0+(c1*x**2)+(c2*x**4)+(c3*x**6)+(c4*x**8))
+    grv=lgamma*(1.0+(c1*x**2)+(c2*x**4)+(c3*x**6)+(c4*x**8))
   end function grv
 
   !>\ingroup gfs_nst_main_mod
