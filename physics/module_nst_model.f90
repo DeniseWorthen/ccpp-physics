@@ -14,13 +14,14 @@ module nst_module
   ! the module of diurnal thermocline layer model
   !
   use machine , only : kind_phys
-  use module_nst_parameters, only: z_w_max,z_w_min,z_w_ini,eps_z_w,eps_conv, &
-       eps_sfs,niter_z_w,niter_conv,niter_sfs,ri_c,                          &
-       ri_g,omg_m,omg_sh, kw => tc_w,visw,t0k,cp_w,                          &
-       z_c_max,z_c_ini,ustar_a_min,delz,exp_const,                           &
-       rad2deg,const_rot,tw_max,sst_max
-  use module_nst_parameters , only : zero, one
-  use module_nst_water_prop, only: sw_rad_skin,sw_ps_9b,sw_ps_9b_aw
+  use module_nst_parameters ,  only : z_w_max, z_w_min, z_w_ini, eps_z_w, eps_conv, &
+       eps_sfs, niter_z_w, niter_conv, niter_sfs, ri_c,                           &
+       ri_g, omg_m, omg_sh,  kw => tc_w, visw, t0k, cp_w,                         &
+       z_c_max, z_c_ini, ustar_a_min, delz, exp_const,                            &
+       rad2deg, const_rot, tw_max, sst_max
+  use module_nst_parameters ,  only : zero,  one
+  use module_nst_water_prop ,  only : sw_rad_skin, sw_ps_9b, sw_ps_9b_aw
+
   implicit none
 
   private
