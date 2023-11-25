@@ -508,7 +508,7 @@ contains
                       !     if (lprnt .and. i == ipr) print *,' beg xz4b=',xz(i),'z_w_max=',
                       !    &z_w_max
                       if ( xz(i) >= z_w_max ) then
-                         ,call dtl_reset (xt(i),xs(i),xu(i),xv(i),xz(i),xzts(i),xtts(i))
+                         call dtl_reset (xt(i),xs(i),xu(i),xv(i),xz(i),xzts(i),xtts(i))
                       endif
                    endif
                 endif           ! if ( q_warm > 0.0 ) then
