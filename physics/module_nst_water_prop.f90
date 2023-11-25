@@ -11,8 +11,7 @@ module module_nst_water_prop
   implicit none
   !
   private
-  public :: rhocoef,density,sw_rad,sw_rad_aw,sw_rad_sum,sw_rad_upper,sw_rad_upper_aw,sw_rad_skin,grv,solar_time_from_julian,compjd, &
-       sw_ps_9b,sw_ps_9b_aw,get_dtzm_point,get_dtzm_2d
+  public :: rhocoef,density,sw_rad_skin,grv,sw_ps_9b,sw_ps_9b_aw,get_dtzm_point,get_dtzm_2d
 
   real(kind=kind_phys), dimension(9), parameter :: f=(/0.237,0.36,0.179,0.087,0.08,0.0246,0.025,0.007,0.0004/)
   real(kind=kind_phys), dimension(9), parameter :: gamma=(/34.8,2.27,3.15e-2,5.48e-3,8.32e-4,1.26e-4,3.13e-4,7.82e-5,1.44e-5/)
@@ -467,7 +466,7 @@ contains
   !
 
   !>\ingroup gfs_nst_main_mod
-  function grv(x)
+  real(kind_phys) function grv(x)
     real(kind=kind_phys) :: x    !< sin(lat)
     real(kind=kind_phys) :: lgamma,c1,c2,c3,c4
     lgamma=9.7803267715

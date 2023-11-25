@@ -7,15 +7,12 @@ module sfc_nst
   use machine , only : kind_phys, kp => kind_phys
   use funcphys, only : fpvs
   use date_def, only : idate
-  use module_nst_water_prop, only : get_dtzm_point, density,&
-       rhocoef,grv,sw_ps_9b
-  use module_nst_parameters, only : t0k,cp_w,omg_m,omg_sh,  &
-       sigma_r,solar_time_6am,ri_c,z_w_max,delz,wd_max,     &
-       rad2deg,const_rot,tau_min,tw_max,sst_max
-  use nst_module, only : cool_skin,dtm_1p,cal_w,cal_ttop,   &
-       convdepth,dtm_1p_fca,dtm_1p_tla,                     &
-       dtm_1p_mwa,dtm_1p_mda,dtm_1p_mta,                    &
-       dtl_reset
+  use module_nst_parameters, only : one, zero, half
+  use module_nst_water_prop, only : get_dtzm_point, density, rhocoef, grv, sw_ps_9b
+  use module_nst_parameters, only : t0k, cp_w, omg_m, omg_sh, sigma_r, solar_time_6am, &
+       ri_c, z_w_max, delz, wd_max, rad2deg, const_rot, tau_min, tw_max, sst_max
+  use nst_module,  only : cool_skin, dtm_1p, cal_w, cal_ttop, convdepth, dtm_1p_fca,   &
+       dtm_1p_tla, dtm_1p_mwa, dtm_1p_mda, dtm_1p_mta, dtl_reset
   !
   implicit none
 contains
@@ -245,7 +242,6 @@ contains
          ws10cr=30., conlf=7.2e-9, consf=6.4e-8
     !
     !======================================================================================================
-    cc
     ! Initialize CCPP error handling variables
     errmsg = ''
     errflg = 0
