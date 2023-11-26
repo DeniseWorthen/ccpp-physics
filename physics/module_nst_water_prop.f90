@@ -539,8 +539,8 @@ contains
     !
     !$$$
     !
-    integer jyr,jmnth,jday,jhr,jmn,jd
-    integer iw3jdn
+    integer :: jyr,jmnth,jday,jhr,jmn,jd
+    integer :: iw3jdn
     real (kind=kind_phys) fjd
     jd=iw3jdn(jyr,jmnth,jday)
     if(jhr.lt.12) then
