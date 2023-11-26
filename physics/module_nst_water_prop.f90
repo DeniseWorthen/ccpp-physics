@@ -14,9 +14,6 @@ module module_nst_water_prop
   private
   public :: rhocoef, density, sw_rad_skin, grv, sw_ps_9b, sw_ps_9b_aw, get_dtzm_point, get_dtzm_2d
 
-  real(kind=kind_phys), dimension(9), parameter :: f=(/0.237,0.36,0.179,0.087,0.08,0.0246,0.025,0.007,0.0004/)
-  real(kind=kind_phys), dimension(9), parameter :: gamma=(/34.8,2.27,3.15e-2,5.48e-3,8.32e-4,1.26e-4,3.13e-4,7.82e-5,1.44e-5/)
-
   !
   interface sw_ps_9b
      module procedure sw_ps_9b
@@ -142,6 +139,8 @@ contains
     !
     real(kind=kind_phys), intent(in)  :: z
     real(kind=kind_phys), intent(out) :: fxp
+    real(kind=kind_phys), dimension(9), parameter :: f=(/0.237,0.36,0.179,0.087,0.08,0.0246,0.025,0.007,0.0004/)
+    real(kind=kind_phys), dimension(9), parameter :: gamma=(/34.8,2.27,3.15e-2,5.48e-3,8.32e-4,1.26e-4,3.13e-4,7.82e-5,1.44e-5/)
     !
     if(z>zero) then
        fxp=one-(f(1)*exp(-z/gamma(1))+f(2)*exp(-z/gamma(2))+f(3)*exp(-z/gamma(3))+ &
@@ -172,6 +171,8 @@ contains
     !
     real(kind=kind_phys), intent(in)  :: z
     real(kind=kind_phys), intent(out) :: aw
+    real(kind=kind_phys), dimension(9), parameter :: f=(/0.237,0.36,0.179,0.087,0.08,0.0246,0.025,0.007,0.0004/)
+    real(kind=kind_phys), dimension(9), parameter :: gamma=(/34.8,2.27,3.15e-2,5.48e-3,8.32e-4,1.26e-4,3.13e-4,7.82e-5,1.44e-5/)
     !
     if(z>zero) then
        aw=(f(1)/gamma(1))*exp(-z/gamma(1))+(f(2)/gamma(2))*exp(-z/gamma(2))+(f(3)/gamma(3))*exp(-z/gamma(3))+ &
@@ -202,6 +203,8 @@ contains
     real(kind=kind_phys), intent(in)  :: z
     real(kind=kind_phys), intent(out) :: fxp
 
+    real(kind=kind_phys), dimension(9), parameter :: f=(/0.237,0.36,0.179,0.087,0.08,0.0246,0.025,0.007,0.0004/)
+    real(kind=kind_phys), dimension(9), parameter :: gamma=(/34.8,2.27,3.15e-2,5.48e-3,8.32e-4,1.26e-4,3.13e-4,7.82e-5,1.44e-5/)
     real(kind=kind_phys), dimension(9) :: zgamma
     real(kind=kind_phys), dimension(9) :: f_c
     !
@@ -237,8 +240,10 @@ contains
     !
     real(kind=kind_phys), intent(in)  :: z
     real(kind=kind_phys), intent(out) :: aw
-    real(kind=kind_phys) :: fxp
 
+    real(kind=kind_phys) :: fxp
+    real(kind=kind_phys), dimension(9), parameter :: f=(/0.237,0.36,0.179,0.087,0.08,0.0246,0.025,0.007,0.0004/)
+    real(kind=kind_phys), dimension(9), parameter :: gamma=(/34.8,2.27,3.15e-2,5.48e-3,8.32e-4,1.26e-4,3.13e-4,7.82e-5,1.44e-5/)
     real(kind=kind_phys), dimension(9) :: zgamma
     real(kind=kind_phys), dimension(9) :: f_aw
     !
@@ -274,8 +279,9 @@ contains
     real(kind=kind_phys), intent(in)  :: z
     real(kind=kind_phys), intent(out) :: sum
 
-    !real(kind=kind_phys), dimension(9) :: zgamma
-    !real(kind=kind_phys), dimension(9) :: f_sum
+    real(kind=kind_phys), dimension(9), parameter :: gamma=(/34.8,2.27,3.15e-2,5.48e-3,8.32e-4,1.26e-4,3.13e-4,7.82e-5,1.44e-5/)
+    real(kind=kind_phys), dimension(9) :: zgamma
+    real(kind=kind_phys), dimension(9) :: f_sum
     !
     !    zgamma=z/gamma
     !    f_sum=(zgamma/z)*exp(-zgamma)
@@ -370,11 +376,11 @@ contains
     real(kind=kind_phys), intent(in)  :: z,f_sol_0
     real(kind=kind_phys), intent(out) :: df_sol_z
     real(kind=kind_phys), dimension(3) :: f_c
-    real(kind=kind_phys), dimension(3), parameter :: f3=(/0.45,0.27,0.28/)
-    real(kind=kind_phys), dimension(3), parameter :: gamma3=(/12.82,0.357,0.014/)
+    real(kind=kind_phys), dimension(3), parameter :: f=(/0.45,0.27,0.28/)
+    real(kind=kind_phys), dimension(3), parameter :: gamma=(/12.82,0.357,0.014/)
     !
     if(z>zero) then
-       f_c      = f3*gamma3(int(one-exp(-z/gamma3)))
+       f_c      = f*gamma(int(one-exp(-z/gamma)))
        df_sol_z = f_sol_0*(one-sum(f_c)/z)
     else
        df_sol_z = zero
@@ -469,14 +475,14 @@ contains
   !>\ingroup gfs_nst_main_mod
   real(kind_phys) function grv(x)
     real(kind=kind_phys) :: x    !< sin(lat)
-    real(kind=kind_phys) :: lgamma,c1,c2,c3,c4
-    lgamma=9.7803267715
+    real(kind=kind_phys) :: gamma,c1,c2,c3,c4
+    gamma=9.7803267715
     c1=0.0052790414
     c2=0.0000232718
     c3=0.0000001262
     c4=0.0000000007
 
-    grv=lgamma*(1.0+(c1*x**2)+(c2*x**4)+(c3*x**6)+(c4*x**8))
+    grv=gamma*(1.0+(c1*x**2)+(c2*x**4)+(c3*x**6)+(c4*x**8))
   end function grv
 
   !>\ingroup gfs_nst_main_mod
