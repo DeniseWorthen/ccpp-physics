@@ -843,8 +843,8 @@ contains
     ! c_d     : coefficient2 to calculate d(tz)/d(ts)
 
     !
-    real(kind=kind_phys), intent(in) :: ustar_a,f_nsol,f_sol_0,evap,sss,alpha,beta,rho_w,rho_a,ts,q_ts,hl_ts,grav,le
-    real(kind=kind_phys), intent(out):: deltat_c,z_c,c_0,c_d
+    real(kind=kind_phys), intent(in)  :: ustar_a,f_nsol,f_sol_0,evap,sss,alpha,beta,rho_w,rho_a,ts,q_ts,hl_ts,grav,le
+    real(kind=kind_phys), intent(out) :: deltat_c,z_c,c_0,c_d
     ! declare local variables
     real(kind=kind_phys), parameter :: a1=0.065, a2=11.0, a3=6.6e-5, a4=8.0e-4, tcw=0.6 , tcwi=1.0/tcw
     real(kind=kind_phys) :: a_c,b_c,zc_ts,bc1,bc2

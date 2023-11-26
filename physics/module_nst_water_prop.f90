@@ -1,3 +1,4 @@
+
 !>\file module_nst_water_prop.f90
 !! This file contains GFS NSST water property subroutines.
 
@@ -198,8 +199,8 @@ contains
     ! output:
     ! fxp: fraction of the solar radiation absorbed by the ocean at depth z (w/m^2)
     !
-    real(kind=kind_phys), intent(in) :: z
-    real(kind=kind_phys), intent(out):: fxp
+    real(kind=kind_phys), intent(in)  :: z
+    real(kind=kind_phys), intent(out) :: fxp
 
     real(kind=kind_phys), dimension(9) :: zgamma
     real(kind=kind_phys), dimension(9) :: f_c
