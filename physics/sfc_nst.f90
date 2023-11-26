@@ -6,7 +6,6 @@ module sfc_nst
 
   use machine , only : kind_phys, kp => kind_phys
   use funcphys, only : fpvs
-  use date_def, only : idate
   use module_nst_parameters, only : one, zero, half
   use module_nst_water_prop, only : get_dtzm_point, density, rhocoef, grv, sw_ps_9b
   use module_nst_parameters, only : t0k, cp_w, omg_m, omg_sh, sigma_r, solar_time_6am, &
@@ -208,7 +207,7 @@ contains
     !
     !    nstm related prognostic fields
     !
-    logical flag(im)
+    logical :: flag(im)
     real (kind=kind_phys), dimension(im) :: xt_old, xs_old, xu_old, xv_old, xz_old, &
          zm_old,xtts_old, xzts_old, ifd_old, tref_old, tskin_old, dt_cool_old,z_c_old
 
@@ -348,7 +347,7 @@ contains
           ulwflx(i) = sfcemis(i) * sbc * t12 * t12
           alon      = xlon(i)*rad2deg
           grav      = grv(sinlat(i))
-          soltim  = mod(alon/15.0_kp + solhr, 24.0_kp)*3600.0_kp
+          soltim    = mod(alon/15.0_kp + solhr, 24.0_kp)*3600.0_kp
           call density(tsea,sss,rho_w)                     ! sea water density
           call rhocoef(tsea,sss,rho_w,alpha,beta)          ! alpha & beta
           !
