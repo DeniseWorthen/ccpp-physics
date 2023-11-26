@@ -386,8 +386,8 @@ contains
           ! & calculate c_0, c_d
           !
           call cool_skin(ustar_a,f_nsol,nswsfc(i),evap(i),sss,alpha,beta, &
-               rho_w,rho_a(i),tsea,q_ts,hl_ts,grav,le,                    &
-               dt_cool(i),z_c(i),c_0(i),c_d(i))
+                         rho_w,rho_a(i),tsea,q_ts,hl_ts,grav,le,          &
+                         dt_cool(i),z_c(i),c_0(i),c_d(i))
 
           tem  = one / wndmag(i)
           cosa = u1(i)*tem
@@ -409,7 +409,7 @@ contains
              !> - Call convdepth() to calculate depth for convective adjustments.
              if ( f_nsol > zero .and. xt(i) > zero ) then
                 call convdepth(kdt,timestep,nswsfc(i),f_nsol,sss,sep,rho_w, &
-                     alpha,beta,xt(i),xs(i),xz(i),d_conv(i))
+                               alpha,beta,xt(i),xs(i),xz(i),d_conv(i))
              else
                 d_conv(i) = zero
              endif
@@ -431,10 +431,10 @@ contains
              rich = ri_c
 
              !> - Call the diurnal thermocline layer model dtm_1p().
-             call dtm_1p(kdt,timestep,rich,taux,tauy,nswsfc(i),    &
-                  f_nsol,sss,sep,q_ts,hl_ts,rho_w,alpha,beta,alon, &
-                  sinlat(i),soltim,grav,le,d_conv(i),              &
-                  xt(i),xs(i),xu(i),xv(i),xz(i),xzts(i),xtts(i))
+             call dtm_1p(kdt,timestep,rich,taux,tauy,nswsfc(i),           &
+                         f_nsol,sss,sep,q_ts,hl_ts,rho_w,alpha,beta,alon, &
+                         sinlat(i),soltim,grav,le,d_conv(i),              &
+                         xt(i),xs(i),xu(i),xv(i),xz(i),xzts(i),xtts(i))
 
              !     if (lprnt .and. i == ipr) print *,' beg xz2=',xz(i)
 

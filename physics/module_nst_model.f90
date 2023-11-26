@@ -34,12 +34,13 @@ contains
   !>\ingroup gfs_nst_main_mod
   !! This subroutine contains the module of diurnal thermocline layer model.
   subroutine dtm_1p(kdt,timestep,rich,tox,toy,i0,q,sss,sep,q_ts,hl_ts,rho, &
-       alpha,beta,alon,sinlat,soltim,grav,le,d_conv,                       &
-       xt,xs,xu,xv,xz,xzts,xtts)
+                    alpha,beta,alon,sinlat,soltim,grav,le,d_conv,          &
+                    xt,xs,xu,xv,xz,xzts,xtts)
 
     integer, intent(in) :: kdt
     real(kind=kind_phys), intent(in) :: timestep,rich,tox,toy,i0,q,sss,sep,q_ts,&
-         hl_ts,rho,alpha,beta,alon,sinlat,soltim,grav,le,d_conv
+                                        hl_ts,rho,alpha,beta,alon,sinlat,soltim,&
+                                        grav,le,d_conv
     real(kind=kind_phys), intent(inout) :: xt,xs,xu,xv,xz,xzts,xtts
     ! local variables
 
@@ -79,13 +80,14 @@ contains
     ! if (lprnt) print *,' first xt=',xt
     if ( xt <= zero ) then                 ! dtl doesn't exist yet
        call dtm_onset(kdt,timestep,rich,tox,toy,i0,q,sss,sep,q_ts,hl_ts,rho,alpha, &
-            beta,alon,sinlat,soltim,grav,le,xt,xs,xu,xv,xz,xzts,xtts)
+                      beta,alon,sinlat,soltim,grav,le,xt,xs,xu,xv,xz,xzts,xtts)
     elseif ( xt > zero ) then              ! dtl already exists
        !
        ! forward the system one time step
        !
-       call eulerm(kdt,timestep,rich,tox,toy,i0,q,sss,sep,q_ts,hl_ts,rho,alpha,    &
-            beta,alon,sinlat,soltim,grav,le,d_conv,xt,xs,xu,xv,xz,xzts,xtts)
+       call eulerm(kdt,timestep,rich,tox,toy,i0,q,sss,sep,q_ts,hl_ts,rho,alpha,   &
+                   beta,alon,sinlat,soltim,grav,le,d_conv,                        &
+                   xt,xs,xu,xv,xz,xzts,xtts)
     endif                         ! if ( xt == 0 ) then
 
   end subroutine dtm_1p
@@ -93,14 +95,16 @@ contains
   !>\ingroup gfs_nst_main_mod
   !! This subroutine integrates one time step with modified Euler method.
   subroutine eulerm(kdt,timestep,rich,tox,toy,i0,q,sss,sep,q_ts,hl_ts,rho,alpha,   &
-       beta,alon,sinlat,soltim,grav,le,d_conv,xt,xs,xu,xv,xz,xzts,xtts)
+                    beta,alon,sinlat,soltim,grav,le,d_conv,                        &
+		    xt,xs,xu,xv,xz,xzts,xtts)
 
     !
     ! subroutine eulerm: integrate one time step with modified euler method
     !
     integer, intent(in) :: kdt
     real(kind=kind_phys), intent(in) :: timestep,rich,tox,toy,i0,q,sss,sep,q_ts,   &
-         hl_ts,rho,alpha,beta,alon,sinlat,soltim,grav,le,d_conv
+                                        hl_ts,rho,alpha,beta,alon,sinlat,soltim,   &
+					grav,le,d_conv
     real(kind=kind_phys), intent(inout) :: xt,xs,xu,xv,xz,xzts,xtts
     !  local variables
     real(kind=kind_phys) :: xt0,xs0,xu0,xv0,xz0,xzts0,xtts0
@@ -201,7 +205,7 @@ contains
     q_warm = fw*i0-q                                !total heat abs in warm layer
     call sw_ps_9b_aw(xz1,aw)
     drho = -alpha*q_warm/(rho*cp_w) + omg_m*beta*sep
-    dzw = xz1*(tox*xu1+toy*xv1) / (rho*(xu1*xu1+xv1*xv1))                      &
+    dzw = xz1*(tox*xu1+toy*xv1) / (rho*(xu1*xu1+xv1*xv1))                        &
          + xz1*xz1*xz1*drho*grav / (4.0*rich*(xu1*xu1+xv1*xv1))
 
     xt2   = xt0   + timestep*q_warm/(rho*cp_w)
@@ -846,7 +850,7 @@ contains
     real(kind=kind_phys), intent(in)  :: ustar_a,f_nsol,f_sol_0,evap,sss,alpha,beta,rho_w,rho_a,ts,q_ts,hl_ts,grav,le
     real(kind=kind_phys), intent(out) :: deltat_c,z_c,c_0,c_d
     ! declare local variables
-    real(kind=kind_phys), parameter :: a1=0.065, a2=11.0, a3=6.6e-5, a4=8.0e-4, tcw=0.6 , tcwi=1.0/tcw
+    real(kind=kind_phys), parameter :: a1=0.065, a2=11.0, a3=6.6e-5, a4=8.0e-4, tcw=0.6, tcwi=1.0/tcw
     real(kind=kind_phys) :: a_c,b_c,zc_ts,bc1,bc2
     real(kind=kind_phys) :: xi,hb,ustar1_a,bigc,deltaf,fxp
     real(kind=kind_phys) :: zcsq
