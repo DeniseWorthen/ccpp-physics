@@ -28,7 +28,14 @@ module module_nst_parameters
 
   implicit none
 
-  public
+  private
+
+  public :: sigma_r
+  public :: zero, one, half
+  public :: niter_conv, niter_z_w, niter_sfs
+  public :: z_w_max, z_w_min, z_w_ini, z_c_max, z_c_ini, eps_z_w, eps_conv, eps_sfs
+  public :: ri_c, ri_g, omg_m, omg_sh,  tc_w, visw, cp_w, t0k, ustar_a_min, delz, exp_const
+  public :: rad2deg, const_rot, tw_max, sst_max, solar_time_6am, tau_min, wd_max
 
   real(kind_phys), parameter :: zero = 0.0_kind_phys, one = 1.0_kind_phys, half = 0.5_kind_phys
   !

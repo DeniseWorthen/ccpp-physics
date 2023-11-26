@@ -14,13 +14,13 @@ module nst_module
   ! the module of diurnal thermocline layer model
   !
   use machine , only : kind_phys
-  use module_nst_parameters ,  only : z_w_max, z_w_min, z_w_ini, eps_z_w, eps_conv, &
-       eps_sfs, niter_z_w, niter_conv, niter_sfs, ri_c,                             &
-       ri_g, omg_m, omg_sh,  kw => tc_w, visw, t0k, cp_w,                           &
-       z_c_max, z_c_ini, ustar_a_min, delz, exp_const,                              &
-       rad2deg, const_rot, tw_max, sst_max
-  use module_nst_parameters ,  only : zero,  one
-  use module_nst_water_prop ,  only : sw_rad_skin, sw_ps_9b, sw_ps_9b_aw
+  use module_nst_parameters , only : z_w_max, z_w_min, z_w_ini, eps_z_w, eps_conv
+  use module_nst_parameters , only : eps_sfs, niter_z_w, niter_conv, niter_sfs, ri_c
+  use module_nst_parameters , only : ri_g, omg_m, omg_sh,  kw => tc_w, visw, t0k, cp_w
+  use module_nst_parameters , only : z_c_max, z_c_ini, ustar_a_min, delz, exp_const
+  use module_nst_parameters , only : rad2deg, const_rot, tw_max, sst_max
+  use module_nst_parameters , only : zero,  one
+  use module_nst_water_prop , only : sw_rad_skin, sw_ps_9b, sw_ps_9b_aw
 
   implicit none
 
@@ -258,6 +258,7 @@ contains
     real(kind=kind_phys), intent(out)   :: tr_mda,tr_fca,tr_tla,tr_mwa
     !  local variables
     real(kind=kind_phys) :: dz,t0,ttop0,ttop,fw,q_warm
+    ! TODO: xz_mwa is unset but used below in max function
     real(kind=kind_phys) :: xz_fca,xz_tla,xz_mwa
     !
     real(kind=kind_phys) :: xz_mda
@@ -733,7 +734,6 @@ contains
     ! real(kind=kind_phys) :: ze,cc,xz0,l,d_sfs, t_sfs, tem
     real(kind=kind_phys) ::    cc,l,d_sfs,tem
     real(kind=kind_phys), parameter :: c2 = 0.3782
-    integer :: n
 
     cc  = ri_g/(grav*c2)
 

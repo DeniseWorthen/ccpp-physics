@@ -3,7 +3,7 @@
 
 module sfc_nst_pre
 
-  use machine , only : kind_phys
+  use machine               , only : kind_phys
   use module_nst_water_prop , only : get_dtzm_2d
   use module_nst_parameters , only : zero, one
 
@@ -43,7 +43,7 @@ contains
     !  ---  locals
     integer :: i
     real(kind=kind_phys), parameter :: omz1 = 2.0_kind_phys
-    real(kind=kind_phys) :: tem1, tem2, dnsst
+    real(kind=kind_phys) :: tem2, dnsst
     real(kind=kind_phys), dimension(im) :: dtzm, z_c_0
 
     ! Initialize CCPP error handling variables

@@ -241,7 +241,6 @@ contains
     real(kind=kind_phys), intent(in)  :: z
     real(kind=kind_phys), intent(out) :: aw
 
-    real(kind=kind_phys) :: fxp
     real(kind=kind_phys), dimension(9), parameter :: f=(/0.237,0.36,0.179,0.087,0.08,0.0246,0.025,0.007,0.0004/)
     real(kind=kind_phys), dimension(9), parameter :: gamma=(/34.8,2.27,3.15e-2,5.48e-3,8.32e-4,1.26e-4,3.13e-4,7.82e-5,1.44e-5/)
     real(kind=kind_phys), dimension(9) :: zgamma
@@ -495,7 +494,6 @@ contains
     real(kind=kind_phys), intent(in)  :: xlon
     real(kind=kind_phys), intent(out) :: soltim
     real(kind=kind_phys) :: fjd,xhr,xmin,xsec,intime
-    integer              :: nn
     !
     fjd=jday-floor(jday)
     fjd=jday
