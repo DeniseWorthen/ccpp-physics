@@ -235,6 +235,8 @@ contains
     !     real (kind=kind_phys), parameter :: alps=1.0, bets=1.0, gams=0.2,
     real (kind=kind_phys), parameter :: alps=0.75,bets=0.75,gams=0.15, &
          ws10cr=30., conlf=7.2e-9, consf=6.4e-8
+    ! debug
+    real (kind=kind_phys) :: alat
     !
     !======================================================================================================
     ! Initialize CCPP error handling variables
@@ -366,6 +368,11 @@ contains
 
           f_nsol   = hflx(i) + evap(i) + ulwflx(i) - dlwflx(i) + omg_sh*qrain(i)
 
+          alat = rad2deg*asin(sinlat(i))
+
+          if (alat .ge. 1.53 .and. alat .le. 1.54 .and. alon .ge. 89.8 .and. alon .le. 90.8) then
+             print '(a,2i6,8e14.5)','XXX ',i,kdt,alon,alat,nswsfc(i),hflx(i),evap(i),ulwflx(i),dlwflx(i),omg_sh*qrain(i)
+          end if
           !     if (lprnt .and. i == ipr) print *,' f_nsol=',f_nsol,' hflx=',
           !    &hflx(i),' evap=',evap(i),' ulwflx=',ulwflx(i),' dlwflx=',dlwflx(i)
           !    &,' omg_sh=',omg_sh,' qrain=',qrain(i)

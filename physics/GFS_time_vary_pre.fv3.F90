@@ -152,7 +152,8 @@
         fjd    = float(jdat(5))/24.0 + float(jdat(6))/1440.0
 
         julian = float(jd1-jd0) + fjd
-
+        !if (me == master) print '(a,3i4)','XXXa ',kdt,size(idate),size(jdat)
+        !if (me == master) print '(a,i4,a,4i6,a,8i6,f12.5)','XXXa ',kdt,' idate= ',idate,' jdat= ',jdat,julian
         !
         ! Year length
         !
