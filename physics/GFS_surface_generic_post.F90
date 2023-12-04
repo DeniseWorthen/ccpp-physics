@@ -144,6 +144,8 @@
             dnirdfi_cpl (i) = adjnirdfd(i)
             dvisbmi_cpl (i) = adjvisbmd(i)
             dvisdfi_cpl (i) = adjvisdfd(i)
+!            dvisdfi_cpl (i) = max( zero, min( one, xcosz(i) ))
+
             dnirbm_cpl  (i) = dnirbm_cpl(i) + adjnirbmd(i)*dtf
             dnirdf_cpl  (i) = dnirdf_cpl(i) + adjnirdfd(i)*dtf
             dvisbm_cpl  (i) = dvisbm_cpl(i) + adjvisbmd(i)*dtf
