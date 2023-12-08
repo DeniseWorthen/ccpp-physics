@@ -358,7 +358,7 @@ contains
           le       = (2.501_kp-0.00237_kp*tsea)*1.0e6_kp
           dwat     = 2.11e-5_kp*(t1(i)/t0k)**1.94_kp        ! water vapor diffusivity
           dtmp     = (one+3.309e-3_kp*(t1(i)-t0k)-1.44e-6_kp*(t1(i)-t0k) &
-               * (t1(i)-t0k))*0.02411_kp/(rho_a(i)*cp)  ! heat diffusivity
+                   * (t1(i)-t0k))*0.02411_kp/(rho_a(i)*cp)  ! heat diffusivity
           wetc     = 622.0_kp*le*qss(i)/(rd*t1(i)*t1(i))
           alfac    = one / (one + (wetc*le*dwat)/(cp*dtmp)) ! wet bulb factor
           tem      = (1.0e3_kp * rain(i) / rho_w) * alfac * cp_w
@@ -371,7 +371,7 @@ contains
           alat = rad2deg*asin(sinlat(i))
 
           if (alat .ge. 7.64 .and. alat .le. 7.68 .and. alon .ge. 89.8 .and. alon .le. 90.8) then
-             print '(a,2i6,8e14.5)','XXX ',i,kdt,alon,alat,nswsfc(i),hflx(i),evap(i),ulwflx(i),dlwflx(i),omg_sh*qrain(i)
+             print '(a,2i6,9e14.5)','XXX ',i,kdt,alon,alat,nswsfc(i),hflx(i),evap(i),ulwflx(i),dlwflx(i),omg_sh*qrain(i),rch(i)
           end if
           !     if (lprnt .and. i == ipr) print *,' f_nsol=',f_nsol,' hflx=',
           !    &hflx(i),' evap=',evap(i),' ulwflx=',ulwflx(i),' dlwflx=',dlwflx(i)
