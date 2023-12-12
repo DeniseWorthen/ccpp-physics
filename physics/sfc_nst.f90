@@ -369,9 +369,19 @@ contains
           f_nsol   = hflx(i) + evap(i) + ulwflx(i) - dlwflx(i) + omg_sh*qrain(i)
 
           alat = rad2deg*asin(sinlat(i))
-
           if (alat .ge. 7.64 .and. alat .le. 7.68 .and. alon .ge. 89.8 .and. alon .le. 90.8) then
-             print '(a,2i6,9e14.5)','XXX ',i,kdt,alon,alat,nswsfc(i),hflx(i),evap(i),ulwflx(i),dlwflx(i),omg_sh*qrain(i),rch(i)
+             !print '(a,2i6,9e14.5)','XXX1 ',i,kdt,alon,alat,nswsfc(i),hflx(i),evap(i),ulwflx(i),dlwflx(i),omg_sh*qrain(i),rch(i)
+             !print '(a,2i6,2e14.5,3f12.5,2l,e12.5)','XXX1 ',i,kdt,alon,alat,solhr,soltim,ifd(i),flag_iter(i),&
+             !     flag_guess(i),wind(i)
+             write(221,'(13e14.5)')solhr,nswsfc(i),hflx(i),evap(i),ulwflx(i),dlwflx(i),omg_sh*qrain(i),wind(i),&
+                  tref(i),tskin(i),tsurf(i),rch(i),ch(i)
+          end if
+          if (alat .ge. 5.70 .and. alat .le. 5.8 .and. alon .ge. 78.4 .and. alon .le. 78.6) then
+             !print '(a,2i6,9e14.5)','XXX2 ',i,kdt,alon,alat,nswsfc(i),hflx(i),evap(i),ulwflx(i),dlwflx(i),omg_sh*qrain(i),rch(i)
+             !print '(a,2i6,2e14.5,3f12.5,2l,e12.5)','XXX2 ',i,kdt,alon,alat,solhr,soltim,ifd(i),flag_iter(i),&
+             !     flag_guess(i),wind(i)
+             write(222,'(13e14.5)')solhr,nswsfc(i),hflx(i),evap(i),ulwflx(i),dlwflx(i),omg_sh*qrain(i),wind(i),&
+                  tref(i),tskin(i),tsurf(i),rch(i),ch(i)
           end if
           !     if (lprnt .and. i == ipr) print *,' f_nsol=',f_nsol,' hflx=',
           !    &hflx(i),' evap=',evap(i),' ulwflx=',ulwflx(i),' dlwflx=',dlwflx(i)
